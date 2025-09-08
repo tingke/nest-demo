@@ -4,7 +4,7 @@ import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
-import { VersioningType } from '@nestjs/common';
+import { VersioningType, VERSION_NEUTRAL } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -15,7 +15,7 @@ async function bootstrap() {
   // 接口版本化管理
   app.enableVersioning({
     type: VersioningType.URI,
-    defaultVersion: '1',
+    defaultVersion: [VERSION_NEUTRAL, '1', '2'], // 设置默认版本
   });
 
   await app.listen(process.env.PORT ?? 3000);

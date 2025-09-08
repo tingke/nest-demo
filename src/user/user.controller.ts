@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Version,
+  VERSION_NEUTRAL,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -22,9 +23,15 @@ export class UserController {
   }
 
   @Get()
-  @Version('1') // 添加版本号装饰器
+  @Version([VERSION_NEUTRAL, '1']) // 添加版本号装饰器
   findAll() {
     return this.userService.findAll();
+  }
+
+  @Get()
+  @Version('2') // 添加版本号装饰器
+  findAll2() {
+    return 'This is version 2';
   }
 
   @Get(':id')
