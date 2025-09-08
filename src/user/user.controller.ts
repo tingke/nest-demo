@@ -12,6 +12,7 @@ import {
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { BusinessException } from 'src/common/exceptions/business.exception';
 
 @Controller('user')
 export class UserController {
@@ -47,5 +48,25 @@ export class UserController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.userService.remove(+id);
+  }
+
+  // 模拟非业务异常
+  @Get('error')
+  findError() {
+    const a: any = {};
+    console.log(a.b.c);
+    return this.userService.findAll();
+  }
+
+  // 模拟业务异常
+  @Get('business-error')
+  findBusinessError() {
+    const a: any = {};
+    try {
+      console.log(a.b.c);
+    } catch (error) {
+      throw new BusinessException('参数错误');
+    }
+    return this.userService.findAll();
   }
 }
