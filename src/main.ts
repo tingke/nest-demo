@@ -8,6 +8,8 @@ import { VersioningType, VERSION_NEUTRAL } from '@nestjs/common';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 import { AllExceptionFilter } from './common/exceptions/base.exception.filter';
 import { HttpExceptionFilter } from './common/exceptions/http.exception.filter';
+import { generateDocument } from './doc';
+
 declare const module: any;
 
 async function bootstrap() {
@@ -27,6 +29,9 @@ async function bootstrap() {
 
   // 全局异常处理
   app.useGlobalFilters(new AllExceptionFilter(), new HttpExceptionFilter());
+
+  // 生成文档
+  generateDocument(app);
 
   await app.listen(process.env.PORT ?? 3000);
 
