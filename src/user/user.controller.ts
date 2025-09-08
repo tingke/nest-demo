@@ -76,6 +76,7 @@ export class UserController {
 
   @Get('getTestName')
   getTestName() {
+    // console.log('ccc');
     return this.configService.get('TEST_VALUE').name;
   }
 }
